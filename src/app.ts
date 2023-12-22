@@ -11,17 +11,12 @@ const port: number = 8000
 
 const wss = new WebSocket.Server({ port: port }, () => {
     console.log('Server started on ' + port)
-
 })
 
 wss.on('connection', (ws: Ws) => {
     try {
         ws.on('message', message => {
             messageEvent(message, ws)
-        })
-
-        bot.on('message', msg => {
-            sendMessage(msg, wss)
         })
 
         ws.on('close', () => {
@@ -31,4 +26,8 @@ wss.on('connection', (ws: Ws) => {
     catch (error) {
         console.log(error)
     }
+})
+
+bot.on('message', msg => {
+    sendMessage(msg, wss)
 })
